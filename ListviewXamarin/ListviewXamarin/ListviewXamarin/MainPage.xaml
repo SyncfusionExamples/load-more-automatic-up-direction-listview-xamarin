@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ListviewXamarin"
+             xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="ListviewXamarin.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MyDataTemplateSelector x:Key="MessageTemplateSelector"></local:MyDataTemplateSelector>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <sync:SfListView x:Name="ListView" IsBusy="True"
+            ItemTemplate="{StaticResource MessageTemplateSelector}" 
+            ItemsSource="{Binding Messages}"
+            ItemSize="100">
+            <sync:SfListView.HeaderTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <sync:LoadMoreIndicator Color="Red" IsRunning="True" IsVisible="{Binding IndicatorIsVisible}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </sync:SfListView.HeaderTemplate>
+            <sync:SfListView.FooterTemplate>
+                <DataTemplate>
+                    <Grid
+                  BackgroundColor="#EFEFF4"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Entry Grid.Column="0" Placeholder="Type Your Message"
+                     FontSize="14" Text="{Binding NewText}"></Entry>
+                        <Grid Grid.Column="1">
+                            <Label Text="Send" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="Black" TextColor="White">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SendCommand}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </sync:SfListView.FooterTemplate>
+        </sync:SfListView>
+    </ContentPage.Content>
+</ContentPage>
+
